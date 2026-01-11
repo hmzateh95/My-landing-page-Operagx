@@ -6,7 +6,7 @@
     <meta name="description" content="Opera GX - The browser built for gamers. Control RAM, CPU & Network. Free VPN, Ad Blocker included. Download free.">
     <title>Opera GX - The Gaming Browser | Download Free</title>
     
-    <!-- Fonts - Same as pre-lander -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -14,7 +14,6 @@
     <style>
         /* ==============================================
            RESET & CSS VARIABLES
-           Matching pre-lander color palette exactly
         =============================================== */
         * {
             margin: 0;
@@ -26,7 +25,8 @@
             --bg-dark: #050810;
             --bg-mid: #0d1224;
             --bg-accent: #1a0a1f;
-            --bg-card: rgba(13, 18, 36, 0.9);
+            --bg-card: rgba(13, 18, 36, 0.85);
+            --bg-glass: rgba(255, 255, 255, 0.03);
             
             --red-primary: #ff2d55;
             --red-secondary: #ff0844;
@@ -41,6 +41,9 @@
             --text-primary: #ffffff;
             --text-secondary: #a8b2d1;
             --text-muted: #5a6789;
+            
+            --border-glow: rgba(255, 45, 85, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.08);
         }
 
         html {
@@ -56,7 +59,7 @@
         }
 
         /* ==============================================
-           BACKGROUND - Same style as pre-lander
+           BACKGROUND
         =============================================== */
         .bg-fixed {
             position: fixed;
@@ -72,7 +75,6 @@
                 linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-mid) 50%, var(--bg-accent) 100%);
         }
 
-        /* Grid overlay - same as pre-lander */
         .grid-overlay {
             position: fixed;
             top: 0;
@@ -84,13 +86,7 @@
                 linear-gradient(rgba(255, 45, 85, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 45, 85, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
             pointer-events: none;
-        }
-
-        @keyframes gridMove {
-            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
-            100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
         }
 
         /* ==============================================
@@ -107,6 +103,7 @@
         .section {
             position: relative;
             z-index: 1;
+            padding: 100px 0;
         }
 
         .text-gradient {
@@ -123,7 +120,120 @@
 
         .text-green {
             color: var(--green-accent);
-            text-shadow: 0 0 20px var(--green-glow);
+        }
+
+        /* ==============================================
+           SECTION IMAGES - Global Styling
+        =============================================== */
+        .section-image {
+            width: 100%;
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 
+                0 0 50px rgba(255, 45, 85, 0.2),
+                0 25px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px var(--border-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 20px;
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 45, 85, 0.1) 0%, transparent 50%, rgba(0, 240, 255, 0.05) 100%);
+            pointer-events: none;
+            border-radius: 20px;
+        }
+
+        /* ==============================================
+           CTA BUTTON - Reusable
+        =============================================== */
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 18px 40px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--red-primary), var(--red-secondary));
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 10px 40px rgba(255, 45, 85, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            animation: cta-pulse 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-cta:hover::before {
+            left: 100%;
+        }
+
+        @keyframes cta-pulse {
+            0%, 100% { box-shadow: 0 10px 40px rgba(255, 45, 85, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) inset; }
+            50% { box-shadow: 0 10px 60px rgba(255, 45, 85, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2) inset, 0 0 30px rgba(255, 45, 85, 0.3); }
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(255, 45, 85, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+            animation: none;
+        }
+
+        .btn-cta svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-cta:hover svg {
+            transform: translateX(4px);
+        }
+
+        .cta-wrapper {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .cta-note {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .cta-note span {
+            color: var(--green-accent);
+            font-weight: 600;
         }
 
         /* ==============================================
@@ -157,9 +267,9 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 12px 28px;
+            padding: 12px 24px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 700;
             color: var(--text-primary);
             text-decoration: none;
@@ -268,57 +378,6 @@
             line-height: 1.6;
         }
 
-        /* Primary CTA - Same style as pre-lander */
-        .cta-primary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 18px 44px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, var(--red-primary), var(--red-secondary));
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 40px rgba(255, 45, 85, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-            animation: cta-pulse 3s ease-in-out infinite;
-        }
-
-        @keyframes cta-pulse {
-            0%, 100% { box-shadow: 0 10px 40px rgba(255, 45, 85, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) inset; }
-            50% { box-shadow: 0 10px 60px rgba(255, 45, 85, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2) inset, 0 0 30px rgba(255, 45, 85, 0.3); }
-        }
-
-        .cta-primary:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(255, 45, 85, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
-            animation: none;
-        }
-
-        .cta-primary svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        .cta-note {
-            margin-top: 18px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .cta-note span {
-            color: var(--green-accent);
-            font-weight: 600;
-        }
-
-        /* Hero Visual */
         .hero-visual {
             position: relative;
             animation: slideInRight 1s ease-out;
@@ -354,24 +413,78 @@
             z-index: -1;
         }
 
-        .hero-image {
-            width: 100%;
-            border-radius: 16px;
-            box-shadow: 
-                0 0 60px rgba(255, 45, 85, 0.3),
-                0 30px 80px rgba(0, 0, 0, 0.5),
-                0 0 0 1px rgba(255, 45, 85, 0.2);
+        /* ==============================================
+           SECTION 2: PERFORMANCE
+        =============================================== */
+        .performance {
+            background: linear-gradient(180deg, transparent 0%, rgba(26, 10, 31, 0.3) 50%, transparent 100%);
+        }
+
+        .split-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .split-grid.reverse {
+            direction: rtl;
+        }
+
+        .split-grid.reverse > * {
+            direction: ltr;
+        }
+
+        .split-content h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .split-content p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        .feature-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .feature-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: var(--bg-glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--cyan-accent);
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-tag svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--green-accent);
         }
 
         /* ==============================================
-           SECTION 2: BENEFITS CARDS
+           SECTION 3: GX CONTROL
         =============================================== */
-        .benefits {
-            padding: 100px 0;
+        .gx-control {
+            text-align: center;
         }
 
         .section-header {
-            text-align: center;
             margin-bottom: 60px;
         }
 
@@ -389,24 +502,26 @@
             margin: 0 auto;
         }
 
-        .benefits-grid {
+        .control-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 50px;
         }
 
-        .benefit-card {
+        .control-card {
             background: var(--bg-card);
-            border: 1px solid rgba(255, 45, 85, 0.15);
-            border-radius: 16px;
-            padding: 32px 20px;
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 35px 25px;
             text-align: center;
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         }
 
-        .benefit-card::before {
+        .control-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -418,212 +533,118 @@
             transition: opacity 0.3s ease;
         }
 
-        .benefit-card:hover {
+        .control-card:hover {
             transform: translateY(-10px);
-            border-color: rgba(255, 45, 85, 0.4);
+            border-color: var(--border-glow);
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 40px rgba(255, 45, 85, 0.15);
         }
 
-        .benefit-card:hover::before {
+        .control-card:hover::before {
             opacity: 1;
         }
 
-        .benefit-icon {
-            width: 64px;
-            height: 64px;
+        .control-icon {
+            width: 70px;
+            height: 70px;
             margin: 0 auto 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(135deg, rgba(255, 45, 85, 0.2), rgba(255, 45, 85, 0.05));
-            border-radius: 14px;
+            border-radius: 16px;
             border: 1px solid rgba(255, 45, 85, 0.25);
         }
 
-        .benefit-icon svg {
-            width: 32px;
-            height: 32px;
+        .control-icon svg {
+            width: 36px;
+            height: 36px;
             stroke: var(--red-primary);
             stroke-width: 1.5;
             fill: none;
         }
 
-        .benefit-title {
+        .control-card h3 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 700;
             margin-bottom: 10px;
         }
 
-        .benefit-desc {
-            font-size: 0.8rem;
+        .control-card p {
+            font-size: 0.9rem;
             color: var(--text-secondary);
-            line-height: 1.5;
+        }
+
+        .control-image {
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         /* ==============================================
-           SECTION 3: FEATURE SHOWCASE
+           SECTION 4: PRIVACY
         =============================================== */
-        .showcase {
-            padding: 100px 0;
-            background: linear-gradient(180deg, transparent 0%, rgba(26, 10, 31, 0.3) 50%, transparent 100%);
+        .privacy {
+            background: linear-gradient(180deg, transparent 0%, rgba(13, 18, 36, 0.5) 50%, transparent 100%);
         }
 
-        .showcase-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
+        .bullet-list {
+            list-style: none;
+            margin-bottom: 10px;
+        }
+
+        .bullet-list li {
+            display: flex;
             align-items: center;
-        }
-
-        .showcase-visual {
-            position: relative;
-        }
-
-        .showcase-image {
-            width: 100%;
-            border-radius: 16px;
-            box-shadow: 0 0 50px rgba(255, 45, 85, 0.25), 0 25px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Floating labels */
-        .showcase-label {
-            position: absolute;
-            background: rgba(13, 18, 36, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 10px;
-            padding: 14px 20px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
-            white-space: nowrap;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .showcase-label.label-1 {
-            top: 10%;
-            right: -15%;
-            border: 1px solid rgba(0, 240, 255, 0.4);
-            color: var(--cyan-accent);
-        }
-
-        .showcase-label.label-2 {
-            bottom: 30%;
-            left: -10%;
-            border: 1px solid rgba(0, 255, 136, 0.4);
-            color: var(--green-accent);
-        }
-
-        .showcase-label.label-3 {
-            bottom: 8%;
-            right: 5%;
-            border: 1px solid rgba(255, 45, 85, 0.4);
-            color: var(--red-primary);
-        }
-
-        .showcase-content h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(1.6rem, 3vw, 2.2rem);
-            font-weight: 800;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .showcase-content p {
+            gap: 14px;
+            padding: 14px 0;
             font-size: 1.05rem;
             color: var(--text-secondary);
-            margin-bottom: 30px;
-            line-height: 1.7;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .showcase-features {
+        .bullet-list li:last-child {
+            border-bottom: none;
+        }
+
+        .bullet-icon {
+            width: 28px;
+            height: 28px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-        }
-
-        .showcase-tag {
-            display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 12px 20px;
-            background: rgba(0, 240, 255, 0.08);
-            border: 1px solid rgba(0, 240, 255, 0.25);
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--cyan-accent);
-            transition: all 0.3s ease;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--green-accent), #00cc6a);
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 0 15px var(--green-glow);
         }
 
-        .showcase-tag:hover {
-            background: rgba(0, 240, 255, 0.15);
-            transform: translateY(-2px);
-        }
-
-        .showcase-tag svg {
-            width: 18px;
-            height: 18px;
-            stroke: var(--cyan-accent);
-            stroke-width: 2;
-            fill: none;
+        .bullet-icon svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--bg-dark);
+            stroke-width: 3;
         }
 
         /* ==============================================
-           SECTION 4: SOCIAL PROOF
+           SECTION 5: SOCIAL PROOF
         =============================================== */
         .social-proof {
-            padding: 100px 0;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .stat-card {
             text-align: center;
-            padding: 50px 30px;
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 45, 85, 0.12);
-            border-radius: 20px;
-            transition: all 0.3s ease;
         }
 
-        .stat-card:hover {
-            border-color: rgba(255, 45, 85, 0.3);
-            transform: translateY(-5px);
-        }
-
-        .stat-number {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2.8rem, 5vw, 4rem);
-            font-weight: 900;
-            margin-bottom: 12px;
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .partners-row {
+        .badges-row {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 60px;
             flex-wrap: wrap;
+            margin-bottom: 60px;
             padding: 40px 0;
             border-top: 1px solid rgba(255, 45, 85, 0.1);
             border-bottom: 1px solid rgba(255, 45, 85, 0.1);
         }
 
-        .partner-item {
+        .badge-item {
             display: flex;
             align-items: center;
             gap: 14px;
@@ -636,84 +657,96 @@
             transition: color 0.3s ease;
         }
 
-        .partner-item:hover {
+        .badge-item:hover {
             color: var(--text-primary);
         }
 
-        .partner-item svg {
-            width: 32px;
-            height: 32px;
+        .badge-item svg {
+            width: 36px;
+            height: 36px;
         }
 
-        /* ==============================================
-           SECTION 5: HOW IT WORKS
-        =============================================== */
-        .how-it-works {
-            padding: 100px 0;
-            background: linear-gradient(180deg, transparent 0%, rgba(13, 18, 36, 0.5) 50%, transparent 100%);
-        }
-
-        .steps-grid {
+        .testimonials-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            max-width: 950px;
-            margin: 0 auto;
-            position: relative;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto 50px;
         }
 
-        /* Connector line */
-        .steps-grid::before {
-            content: '';
-            position: absolute;
-            top: 50px;
-            left: 20%;
-            width: 60%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--red-primary), var(--cyan-accent), var(--green-accent));
-            opacity: 0.3;
+        .testimonial-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: left;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
 
-        .step-card {
-            text-align: center;
-            position: relative;
+        .testimonial-card:hover {
+            border-color: var(--border-glow);
+            transform: translateY(-5px);
         }
 
-        .step-number {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 28px;
+        .testimonial-text {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-text::before {
+            content: '"';
+            font-size: 2rem;
+            color: var(--red-primary);
+            font-family: Georgia, serif;
+            line-height: 0;
+            margin-right: 5px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--red-primary), var(--cyan-accent));
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, var(--red-primary), var(--red-secondary));
-            border-radius: 50%;
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.2rem;
-            font-weight: 900;
-            box-shadow: 0 0 40px rgba(255, 45, 85, 0.5), 0 15px 40px rgba(0, 0, 0, 0.3);
-            position: relative;
-            z-index: 2;
-        }
-
-        .step-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            margin-bottom: 12px;
         }
 
-        .step-desc {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
+        .author-info h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .author-info span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .proof-image {
+            max-width: 700px;
+            margin: 0 auto 40px;
         }
 
         /* ==============================================
            SECTION 6: FINAL CTA
         =============================================== */
         .final-cta {
-            padding: 120px 0;
+            padding: 140px 0;
             text-align: center;
             position: relative;
         }
@@ -724,61 +757,33 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 700px;
-            height: 700px;
+            width: 800px;
+            height: 800px;
             background: radial-gradient(circle, rgba(255, 45, 85, 0.2) 0%, transparent 70%);
-            filter: blur(80px);
+            filter: blur(100px);
             pointer-events: none;
         }
 
         .final-cta-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
             font-weight: 900;
-            margin-bottom: 18px;
-            text-shadow: 0 0 40px rgba(255, 45, 85, 0.3);
+            margin-bottom: 20px;
+            text-shadow: 0 0 50px rgba(255, 45, 85, 0.4);
         }
 
         .final-cta-subtitle {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             color: var(--text-secondary);
-            margin-bottom: 40px;
+            margin-bottom: 45px;
             max-width: 550px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .cta-large {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
+        .btn-cta-large {
             padding: 22px 55px;
-            font-family: 'Orbitron', sans-serif;
             font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, var(--red-primary), var(--red-secondary));
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 15px 50px rgba(255, 45, 85, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-            animation: cta-pulse 3s ease-in-out infinite;
-        }
-
-        .cta-large:hover {
-            transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 25px 70px rgba(255, 45, 85, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
-            animation: none;
-        }
-
-        .cta-large svg {
-            width: 24px;
-            height: 24px;
         }
 
         /* ==============================================
@@ -787,7 +792,7 @@
         .footer {
             background: rgba(5, 8, 16, 0.98);
             border-top: 1px solid rgba(255, 45, 85, 0.15);
-            padding: 50px 0;
+            padding: 50px 0 120px; /* Extra padding for mobile sticky CTA */
         }
 
         .footer-content {
@@ -830,107 +835,133 @@
         }
 
         /* ==============================================
-           RESPONSIVE DESIGN
+           MOBILE STICKY CTA
         =============================================== */
-        @media (max-width: 1100px) {
-            .benefits-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+        .mobile-sticky-cta {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(5, 8, 16, 0.98);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 45, 85, 0.3);
+            z-index: 99;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
         }
 
+        .mobile-sticky-cta .btn-cta {
+            width: 100%;
+            padding: 16px 30px;
+            font-size: 0.9rem;
+            animation: none;
+        }
+
+        /* ==============================================
+           RESPONSIVE DESIGN
+        =============================================== */
         @media (max-width: 1024px) {
             .container {
                 padding: 0 30px;
             }
 
-            .hero-grid {
+            .hero-grid,
+            .split-grid {
                 grid-template-columns: 1fr;
                 gap: 50px;
                 text-align: center;
             }
 
-            .hero-visual {
+            .split-grid.reverse {
+                direction: ltr;
+            }
+
+            .hero-visual,
+            .split-grid .section-image {
                 order: -1;
                 max-width: 600px;
                 margin: 0 auto;
             }
 
-            .showcase-grid {
-                grid-template-columns: 1fr;
-                gap: 50px;
-                text-align: center;
-            }
-
-            .showcase-visual {
-                order: -1;
-                max-width: 600px;
-                margin: 0 auto;
-            }
-
-            .showcase-features {
+            .feature-tags {
                 justify-content: center;
             }
 
-            .showcase-label {
-                display: none;
+            .control-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
 
-            .steps-grid::before {
-                display: none;
+            .testimonials-grid {
+                grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 768px) {
+            .section {
+                padding: 80px 0;
+            }
+
+            .mobile-sticky-cta {
+                display: block;
+            }
+
+            .footer {
+                padding-bottom: 100px;
+            }
+
             .header-cta span {
                 display: none;
             }
 
             .header-cta {
-                padding: 12px 16px;
+                padding: 12px 14px;
             }
 
             .hero {
                 padding: 120px 0 80px;
             }
 
-            .benefits-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
+            .hero-title {
+                font-size: 1.8rem;
             }
 
-            .benefit-card {
-                padding: 26px 16px;
-            }
-
-            .stats-grid {
+            .control-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
 
-            .stat-card {
-                padding: 40px 25px;
+            .control-card {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                text-align: left;
+                padding: 25px;
             }
 
-            .steps-grid {
-                grid-template-columns: 1fr;
-                gap: 35px;
+            .control-icon {
+                margin: 0;
+                flex-shrink: 0;
             }
 
-            .step-number {
-                width: 80px;
-                height: 80px;
-                font-size: 1.8rem;
+            .badges-row {
+                gap: 30px;
             }
 
-            .partners-row {
-                gap: 35px;
+            .badge-item {
+                font-size: 0.75rem;
             }
 
-            .cta-primary, .cta-large {
+            .badge-item svg {
+                width: 28px;
+                height: 28px;
+            }
+
+            .btn-cta {
                 width: 100%;
-                max-width: 320px;
+                max-width: 350px;
                 padding: 16px 30px;
-                font-size: 0.95rem;
+                font-size: 0.9rem;
             }
 
             .footer-content {
@@ -941,7 +972,7 @@
             .footer-links {
                 flex-wrap: wrap;
                 justify-content: center;
-                gap: 25px;
+                gap: 20px;
             }
         }
 
@@ -950,48 +981,48 @@
                 padding: 0 20px;
             }
 
+            .section {
+                padding: 60px 0;
+            }
+
             .hero-badge {
-                font-size: 0.75rem;
-                padding: 8px 16px;
+                font-size: 0.7rem;
+                padding: 8px 14px;
             }
 
             .hero-title {
-                font-size: 1.7rem;
-            }
-
-            .section-title {
                 font-size: 1.5rem;
             }
 
-            .benefits-grid {
-                gap: 12px;
+            .section-title {
+                font-size: 1.4rem;
             }
 
-            .benefit-icon {
-                width: 50px;
-                height: 50px;
+            .split-content h2 {
+                font-size: 1.4rem;
             }
 
-            .benefit-icon svg {
-                width: 26px;
-                height: 26px;
+            .control-icon {
+                width: 55px;
+                height: 55px;
             }
 
-            .benefit-title {
-                font-size: 0.8rem;
+            .control-icon svg {
+                width: 28px;
+                height: 28px;
             }
 
-            .benefit-desc {
-                font-size: 0.75rem;
+            .testimonial-card {
+                padding: 24px;
             }
 
-            .partner-item {
-                font-size: 0.75rem;
+            .final-cta-title {
+                font-size: 1.6rem;
             }
 
-            .partner-item svg {
-                width: 26px;
-                height: 26px;
+            .btn-cta-large {
+                padding: 16px 30px;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -1018,7 +1049,7 @@
                 <path d="M37.2545 12.0244C38.3677 12.1504 39.3418 12.44 40.2779 12.8681C42.2892 13.8 43.8958 15.223 45.2241 16.9733C47.0583 19.366 48.2095 22.0734 48.9305 24.9822C49.6136 27.7022 49.8413 30.4726 49.6895 33.2681C49.4745 37.0963 48.589 40.7356 46.7294 44.1229C45.7048 45.9866 44.4145 47.6489 42.7446 48.9963C41.3278 50.1422 39.7466 50.9481 37.9376 51.2756C37.8111 51.3008 37.6846 51.3134 37.5581 51.326C37.5202 51.326 37.4696 51.3134 37.3684 51.2882C37.4569 51.2126 37.5075 51.1622 37.5708 51.1119C40.4423 49.0593 42.4916 46.3393 43.9717 43.1785C45.2241 40.5215 45.9704 37.7133 46.2867 34.7918C46.7547 30.3844 46.2867 26.0904 44.7181 21.9222C43.529 18.7363 41.7706 15.9156 39.2406 13.5985C38.7472 13.1451 38.1906 12.7422 37.6593 12.3141C37.5455 12.226 37.4443 12.1378 37.2545 11.9993V12.0244Z" fill="white"/>
             </svg>
             
-            <a href="https://www.opera.com/gx" class="header-cta" target="_blank" rel="noopener">
+            <a href="https://www.opera.com/gx?utm_source=perfgames&utm_campaign=landing" class="header-cta" target="_blank" rel="noopener">
                 <span>Download Free</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
@@ -1042,13 +1073,13 @@
                     </h1>
                     
                     <p class="hero-subtitle">
-                        The browser built from the ground up for gamers. Control your RAM, CPU, and network — all in one place. 100% free.
+                        The browser built for gamers. Control RAM, CPU & bandwidth — all free.
                     </p>
                     
-                    <a href="https://www.opera.com/gx" class="cta-primary" target="_blank" rel="noopener">
-                        Download Opera GX – Free
+                    <a href="https://www.opera.com/gx?utm_source=perfgames&utm_campaign=landing" class="btn-cta" target="_blank" rel="noopener">
+                        Get Opera GX Free
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
                     </a>
                     
@@ -1056,171 +1087,220 @@
                 </div>
                 
                 <div class="hero-visual">
-                    <img src="gamer-image.png" class="hero-image" alt="Pro gamer setup with Opera GX">
+                    <div class="section-image">
+                        <img src="images/hero.jpg" alt="Pro gamer with RGB headset gaming">
+                        <div class="image-overlay"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ==============================================
-         SECTION 2: BENEFITS
+         SECTION 2: PERFORMANCE
     =============================================== -->
-    <section class="benefits section">
+    <section class="performance section">
+        <div class="container">
+            <div class="split-grid">
+                <div class="split-content">
+                    <h2>Built for<br><span class="text-gradient">Maximum Performance</span></h2>
+                    
+                    <p>Your browser shouldn't compete with your game. Opera GX lets you limit how much CPU and RAM your browser uses — so your game always gets priority.</p>
+                    
+                    <div class="feature-tags">
+                        <div class="feature-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Smoother Gameplay
+                        </div>
+                        <div class="feature-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Zero Background Drain
+                        </div>
+                    </div>
+                    
+                    <div class="cta-wrapper" style="text-align: left;">
+                        <a href="https://www.opera.com/gx?utm_source=perfgames&utm_campaign=landing" class="btn-cta" target="_blank" rel="noopener">
+                            Boost Your Performance
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="section-image">
+                    <img src="images/performance.png" alt="FPS performance gaming monitor">
+                    <div class="image-overlay"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==============================================
+         SECTION 3: GX CONTROL
+    =============================================== -->
+    <section class="gx-control section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Gaming Tools <span class="text-gradient">Built-In</span></h2>
-                <p class="section-subtitle">Everything you need to optimize your gaming experience, all in one browser.</p>
+                <h2 class="section-title">Total Control with <span class="text-gradient">GX Control</span></h2>
+                <p class="section-subtitle">Three powerful limiters. One browser. Complete control over your resources.</p>
             </div>
             
-            <div class="benefits-grid">
+            <div class="control-grid">
                 <!-- RAM Limiter -->
-                <div class="benefit-card">
-                    <div class="benefit-icon">
+                <div class="control-card">
+                    <div class="control-icon">
                         <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
                     </div>
-                    <h3 class="benefit-title">RAM Limiter</h3>
-                    <p class="benefit-desc">Control browser memory usage</p>
+                    <div>
+                        <h3>RAM Limiter</h3>
+                        <p>Set browser memory limits</p>
+                    </div>
                 </div>
                 
                 <!-- CPU Limiter -->
-                <div class="benefit-card">
-                    <div class="benefit-icon">
+                <div class="control-card">
+                    <div class="control-icon">
                         <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3"/></svg>
                     </div>
-                    <h3 class="benefit-title">CPU Limiter</h3>
-                    <p class="benefit-desc">Reduce processor load</p>
+                    <div>
+                        <h3>CPU Limiter</h3>
+                        <p>Reduce processor usage</p>
+                    </div>
                 </div>
                 
                 <!-- Network Limiter -->
-                <div class="benefit-card">
-                    <div class="benefit-icon">
+                <div class="control-card">
+                    <div class="control-icon">
                         <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>
                     </div>
-                    <h3 class="benefit-title">Network Limiter</h3>
-                    <p class="benefit-desc">Manage your bandwidth</p>
-                </div>
-                
-                <!-- Ad Blocker -->
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9l6 6M15 9l-6 6"/></svg>
+                    <div>
+                        <h3>Network Limiter</h3>
+                        <p>Manage your bandwidth</p>
                     </div>
-                    <h3 class="benefit-title">Ad Blocker</h3>
-                    <p class="benefit-desc">No more intrusive ads</p>
-                </div>
-                
-                <!-- Free VPN -->
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    </div>
-                    <h3 class="benefit-title">Free VPN</h3>
-                    <p class="benefit-desc">Secure & private browsing</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==============================================
-         SECTION 3: FEATURE SHOWCASE
-    =============================================== -->
-    <section class="showcase section">
-        <div class="container">
-            <div class="showcase-grid">
-                <div class="showcase-visual">
-                    <img src="gamer-image.png" class="showcase-image" alt="Opera GX Control Panel">
-                    
-                    <div class="showcase-label label-1">Lower RAM Usage</div>
-                    <div class="showcase-label label-2">100% Ads Blocked</div>
-                    <div class="showcase-label label-3">Higher FPS</div>
-                </div>
-                
-                <div class="showcase-content">
-                    <h3>Your System.<br><span class="text-gradient">Your Rules.</span></h3>
-                    
-                    <p>Set limits on how much of your system resources the browser can use. Game without interruptions, lag, or slowdowns.</p>
-                    
-                    <div class="showcase-features">
-                        <div class="showcase-tag">
-                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                            Smoother Gameplay
-                        </div>
-                        <div class="showcase-tag">
-                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                            Less Background Drain
-                        </div>
-                        <div class="showcase-tag">
-                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                            Zero Interruptions
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==============================================
-         SECTION 4: SOCIAL PROOF
-    =============================================== -->
-    <section class="social-proof section">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number text-gradient">30M+</div>
-                    <div class="stat-label">Active Gamers</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number text-cyan">100%</div>
-                    <div class="stat-label">Free Forever</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number text-green">5★</div>
-                    <div class="stat-label">Gamer Rated</div>
                 </div>
             </div>
             
-            <div class="partners-row">
-                <div class="partner-item">
+            <div class="control-image section-image">
+                <img src="images/gx-control.png" alt="Opera GX Control Panel Dashboard">
+                <div class="image-overlay"></div>
+            </div>
+            
+            <div class="cta-wrapper">
+                <a href="https://www.opera.com/gx?utm_source=perfgames&utm_campaign=landing" class="btn-cta" target="_blank" rel="noopener">
+                    Take Control Now
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==============================================
+         SECTION 4: PRIVACY
+    =============================================== -->
+    <section class="privacy section">
+        <div class="container">
+            <div class="split-grid reverse">
+                <div class="split-content">
+                    <h2>Privacy &<br><span class="text-cyan">Security Built-In</span></h2>
+                    
+                    <p>No extra extensions needed. Opera GX comes with everything you need to browse safely and ad-free.</p>
+                    
+                    <ul class="bullet-list">
+                        <li>
+                            <span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>
+                            Built-in Ad Blocker — browse without interruptions
+                        </li>
+                        <li>
+                            <span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>
+                            Free VPN — unlimited, no data caps
+                        </li>
+                        <li>
+                            <span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span>
+                            Tracker Blocker — keep your data private
+                        </li>
+                    </ul>
+                    
+                    <div class="cta-wrapper" style="text-align: left;">
+                        <a href="https://www.opera.com/gx?utm_source=perfgames&utm_campaign=landing" class="btn-cta" target="_blank" rel="noopener">
+                            Browse Safely
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="section-image">
+                    <img src="images/privacy.png" alt="VPN Shield and Security Protection">
+                    <div class="image-overlay"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==============================================
+         SECTION 5: SOCIAL PROOF
+    =============================================== -->
+    <section class="social-proof section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Trusted by <span class="text-gradient">30M+ Gamers</span></h2>
+            </div>
+            
+            <div class="badges-row">
+                <div class="badge-item">
                     <svg viewBox="0 0 24 24" fill="#C9AA71"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                     Official LOL Esports Partner
                 </div>
-                <div class="partner-item">
+                <div class="badge-item">
                     <svg viewBox="0 0 24 24" fill="#ff2d55"><circle cx="12" cy="12" r="10"/></svg>
                     iF Design Award
                 </div>
-                <div class="partner-item">
+                <div class="badge-item">
                     <svg viewBox="0 0 24 24" fill="#ff2d55"><circle cx="12" cy="12" r="8"/></svg>
                     Red Dot Award
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- ==============================================
-         SECTION 5: HOW IT WORKS
-    =============================================== -->
-    <section class="how-it-works section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Ready in <span class="text-cyan">3 Steps</span></h2>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">Finally a browser that doesn't eat all my RAM while I'm trying to hit Diamond. GX Control is a game changer.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JK</div>
+                        <div class="author-info">
+                            <h4>Jake K.</h4>
+                            <span>Competitive FPS Player</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">The built-in VPN and ad blocker alone make it worth it. Plus it looks sick. Been using it for 2 years now.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SM</div>
+                        <div class="author-info">
+                            <h4>Sarah M.</h4>
+                            <span>Streamer & Content Creator</span>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3 class="step-title">Download</h3>
-                    <p class="step-desc">Get Opera GX free from the official site</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3 class="step-title">Install</h3>
-                    <p class="step-desc">Takes less than 2 minutes</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3 class="step-title">Game</h3>
-                    <p class="step-desc">Play with optimized performance</p>
-                </div>
+            <div class="proof-image section-image">
+                <img src="images/proof.png" alt="Pro gamer using Opera GX browser">
+                <div class="image-overlay"></div>
+            </div>
+            
+            <div class="cta-wrapper">
+                <a href="https://www.opera.com/gx?utm_source=perfgames&utm_campaign=landing" class="btn-cta" target="_blank" rel="noopener">
+                    Join 30M+ Gamers
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
             </div>
         </div>
     </section>
@@ -1231,16 +1311,16 @@
     <section class="final-cta section">
         <div class="container">
             <h2 class="final-cta-title">Ready to <span class="text-gradient">Level Up?</span></h2>
-            <p class="final-cta-subtitle">Join 30 million gamers who already made the switch. Download now — it's free.</p>
+            <p class="final-cta-subtitle">Download Opera GX free. No credit card. No limits. Just better gaming.</p>
             
-            <a href="https://www.opera.com/gx" class="cta-large" target="_blank" rel="noopener">
+            <a href="https://www.opera.com/gx?utm_source=perfgames&utm_campaign=landing" class="btn-cta btn-cta-large" target="_blank" rel="noopener">
                 Download Opera GX – It's Free
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
                 </svg>
             </a>
             
-            <p class="cta-note"><span>✓</span> Free download · Official Opera GX · No account required</p>
+            <p class="cta-note"><span>✓</span> Free forever · Official Opera GX · No account required</p>
         </div>
     </section>
 
@@ -1264,5 +1344,17 @@
             </div>
         </div>
     </footer>
+
+    <!-- ==============================================
+         MOBILE STICKY CTA
+    =============================================== -->
+    <div class="mobile-sticky-cta">
+        <a href="https://www.opera.com/gx?utm_source=perfgames&utm_campaign=landing" class="btn-cta" target="_blank" rel="noopener">
+            Get Opera GX Free
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+        </a>
+    </div>
 </body>
 </html>
